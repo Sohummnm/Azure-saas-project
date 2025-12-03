@@ -1,0 +1,24 @@
+#workflow for resource group creation
+
+name: Resource group Module -Prod
+on:
+    workflow_dispatch:
+        inputs:
+            tf_action:
+                description: "Terraform action to perform (plan, apply, destroy)"
+                required: true
+                default: "plan"
+    workflow_call:
+        inputs:
+            tf_action:
+                description: "Terraform action to perform (plan, apply, destroy)"
+                required: true
+                type: string
+jobs:
+    resource_group:
+        uses: ./.github/workflows/reusable_workflow.yaml
+        with:
+            module: "iac/modules/resource-groups"
+            tfvars: "iac/environments/prod/resource-groups.tfvars"
+            backend: "iac/environments/prod/backend/resource_group.backend.hcl"
+            tf_action: ${{ inputs.tf_action}}

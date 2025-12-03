@@ -1,0 +1,11 @@
+================================
+OIDC connection
+================================
+1. Created a App registration
+2. Configured Federated credentials, added GitHub details like organization name, repo name, branch name.
+3. IN subscription, in IAM; gave a contributor role to this app.
+- app registration and federated creds are so that GitHub actions can authenticate with the azure account. 
+- BUT attaching IAM contributor role give this app registration the rights to create infra in the specified subscription,
+we can attach roles subscription based or resource group based. 
+4. Created a auth.yaml a temp workflow to check the connection which fetched the Azure Account ID successfully. 
+================================= 
