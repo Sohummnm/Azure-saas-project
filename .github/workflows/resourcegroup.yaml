@@ -19,7 +19,7 @@ jobs:
         uses: ./.github/workflows/reusableworkflow.yaml
         with:
             module: "resource-groups"
-            tfvars: "../../environments/prod/tfvars/resource-groups.tfvars"
+            tfvars: "../../environments/prod/tfvars/resource_groups.tfvars"
             backend: "../../environments/prod/backend/resource_group.backend.hcl"
             tf_action: ${{ inputs.tf_action}}
         secrets:
