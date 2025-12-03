@@ -18,6 +18,13 @@ on:
           required: true
           type: string
           default: "plan"
+    secrets:
+        client-id:
+            required: true
+        tenant-id:
+            required: true
+        subscription-id:
+            required: true
 jobs:
     terraform:
         runs-on: ubuntu-latest
