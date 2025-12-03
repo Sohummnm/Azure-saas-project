@@ -10,6 +10,6 @@ terraform {
 }
 
 provider "azurerm" {
-  subscription_id = ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  subscription_id = "1460ff46-1cc6-4ab3-846c-f4cd40286842"
   features {}
 }
