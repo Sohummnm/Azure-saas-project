@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - dev
+    paths:
+      - '.github/workflows/temp.yaml'
 
 jobs:
   auth-test:
