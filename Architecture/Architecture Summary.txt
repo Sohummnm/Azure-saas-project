@@ -1,0 +1,45 @@
+Architecture: 
+1. User External traffic
+2. Admin Access[Ops/devops]
+3. Private Resources[AKS-->ACR/Blob/Keyvault]
+4. Internal Traffic[Clouds secure service-to-service(like mtls in k8s)]
+5. Monitoring [AKS-LogAnalytics-AzureMonitor]
+
+-- 1 Tenant ID -- 4 Subscription Per Environment -- 1 Resource Group per Subscription --
+-- Independent Per Environment ACR & KeyVault & Blob Storage
+
+
+1. 🌍 External Traffic (User → Workloads)
+- User request → Route 53 (DNS resolve) → Azure Traffic Manager (failover/load balancing).
+- Traffic Manager → Application Gateway (WAF enabled, TLS termination) → AKS ingress.
+- Purpose: Secure entry point for external users, with DNS + failover + WAF protection.
+
+2. 🔑 Admin Access
+- Ops team → Bastion → AKS nodes (private secure SSH/RDP).
+- Bastion provides controlled, audited access to VMs/nodes inside the VNET.
+- Purpose: Isolate admin access from user traffic, enforce least privilege.
+
+3. 🔒 Private Resources (AKS dependencies)
+- AKS → Azure Firewall (via UDR) → Private endpoints for:
+- ACR (container images).
+- Key Vault (secrets, certificates).
+- Blob Storage (data, artifacts).
+- Purpose: Ensure AKS workloads consume critical services securely, with traffic contained inside Azure backbone.
+
+4. 🌐 Internal Traffic (Cloud services ↔ services)
+- Azure DNS Private Zones resolve private endpoints.
+- WAF → APIM → App Gateway → AKS for internal API calls.
+- Used by other Azure services, enterprise apps, or governance layers.
+- Purpose: Secure, governed communication between Azure services, excluding AKS’s direct dependencies.
+
+5. 📊 Monitoring
+- AKS → Log Analytics → Azure Monitor.
+- Collects logs, metrics, and telemetry for observability.
+- Purpose: Centralized monitoring, alerting, and compliance reporting.
+
+✅ Summary
+- External Traffic User → Entry path for customers.
+- Admin Access → Secure ops access via Bastion.
+- Private Resources → AKS dependencies (images, secrets, storage).
+- Internal Traffic → Service-to-service flows inside Azure (APIM, WAF, DNS).
+- Monitoring → Observability and compliance.
