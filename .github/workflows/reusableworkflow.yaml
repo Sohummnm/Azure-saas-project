@@ -19,11 +19,11 @@ on:
           type: string
           default: "plan"
     secrets:
-        client-id:
+        AZURE_CLIENT_ID:
             required: true
-        tenant-id:
+        AZURE_TENANT_ID:
             required: true
-        subscription-id:
+        AZURE_SUBSCRIPTION_ID:
             required: true
 jobs:
     terraform:
@@ -37,9 +37,9 @@ jobs:
           - name: Azure Login(oidc)
             uses: azure/login@v2
             with:
-              client-id: ${{ secrets.AZURE_CLIENT_ID }}
-              tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-              subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+              AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+              AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+              AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           - name: Setup Terraform
             uses: hashicorp/setup-terraform@v3
             with:
