@@ -22,3 +22,6 @@ jobs:
             tfvars: "iac/environments/prod/resource-groups.tfvars"
             backend: "iac/environments/prod/backend/resource_group.backend.hcl"
             tf_action: ${{ inputs.tf_action}}
+        permissions:
+            id-token: write
+            contents: read

@@ -14,6 +14,10 @@ on:
         backend:
             required: true
             type: string
+        tf_action:
+          required: true
+          type: string
+          default: "plan"
 jobs:
     terraform:
         runs-on: ubuntu-latest
