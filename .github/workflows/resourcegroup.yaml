@@ -19,8 +19,8 @@ jobs:
         uses: ./.github/workflows/reusableworkflow.yaml
         with:
             module: "resource-groups"
-            tfvars: "iac/environments/prod/tfvars/resource-groups.tfvars"
-            backend: "iac/environments/prod/backend/resource_group.backend.hcl"
+            tfvars: "../../environments/prod/tfvars/resource-groups.tfvars"
+            backend: "../../environments/prod/backend/resource_group.backend.hcl"
             tf_action: ${{ inputs.tf_action}}
         secrets:
             AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
