@@ -18,7 +18,7 @@ jobs:
     resource_group:
         uses: ./.github/workflows/reusableworkflow.yaml
         with:
-            module: "iac/modules/resource-groups"
+            module: "resource-groups"
             tfvars: "iac/environments/prod/resource-groups.tfvars"
             backend: "iac/environments/prod/backend/resource_group.backend.hcl"
             tf_action: ${{ inputs.tf_action}}
