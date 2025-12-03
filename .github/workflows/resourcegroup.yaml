@@ -22,6 +22,7 @@ jobs:
             tfvars: "iac/environments/prod/resource-groups.tfvars"
             backend: "iac/environments/prod/backend/resource_group.backend.hcl"
             tf_action: ${{ inputs.tf_action}}
+        secrets:
             client-id: ${{ secrets.AZURE_CLIENT_ID }}
             tenant-id: ${{ secrets.AZURE_TENANT_ID }}
             subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
