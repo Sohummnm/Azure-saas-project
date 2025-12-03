@@ -16,7 +16,7 @@ on:
                 type: string
 jobs:
     resource_group:
-        uses: .github/workflows/reusable_workflow.yaml
+        uses: ./.github/workflows/reusableworkflow.yaml
         with:
             module: "iac/modules/resource-groups"
             tfvars: "iac/environments/prod/resource-groups.tfvars"
