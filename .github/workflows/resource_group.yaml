@@ -16,9 +16,9 @@ on:
                 type: string
 jobs:
     resource_group:
-        uses: ./github/workflows/reusable_workflow.yaml
+        uses: ./.github/workflows/reusable_workflow.yaml
         with:
             module: "/iac/modules/resource-groups"
             tfvars: "iac/environments/prod/resource-groups.tfvars"
             backend: "iac/environments/prod/backend/resource_group.backend.hcl"
-            tf_action: ${{ github}}
+            tf_action: ${{ github.event.inputs.tf_action}}
