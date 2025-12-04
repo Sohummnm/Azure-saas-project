@@ -27,7 +27,7 @@ aks_rules = {
     access    = "Allow"
     protocol  = "Tcp"
     port      = "443"
-    source    = data.terraform_remote_state.vnet.outputs.subnet_ids["appgw"]
+    source    = "10.0.128.0/24"   # literal CIDR of AppGW subnet
   }
   allow_out_acr = {
     priority  = 200
@@ -79,7 +79,7 @@ appgw_rules = {
     access    = "Allow"
     protocol  = "Tcp"
     port      = "443"
-    source    = data.terraform_remote_state.vnet.outputs.subnet_ids["aks"]
+    source    = "10.0.0.0/17"   # literal CIDR of AKS subnet
   }
 }
 
@@ -91,7 +91,7 @@ db_rules = {
     access    = "Allow"
     protocol  = "Tcp"
     port      = "1433"
-    source    = data.terraform_remote_state.vnet.outputs.subnet_ids["appgw"]
+    source    = "10.0.128.0/24"   # literal CIDR of AppGW subnet
   }
   allow_aks = {
     priority  = 110
@@ -99,7 +99,7 @@ db_rules = {
     access    = "Allow"
     protocol  = "Tcp"
     port      = "1433"
-    source    = data.terraform_remote_state.vnet.outputs.subnet_ids["aks"]
+    source    = "10.0.0.0/17"     # literal CIDR of AKS subnet
   }
   deny_internet_inbound = {
     priority  = 400
