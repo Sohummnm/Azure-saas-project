@@ -1,7 +1,7 @@
 resource "azurerm_network_security_group" "nsg" {
     for_each = var.nsgs
     name = each.key
-    location = data.terraform_remote_state.resource_group.outputs.location
+    location = data.terraform_remote_state.resource_group.outputs.rg_location
     resource_group_name = data.terraform_remote_state.resource_group.outputs.rg_name
     tags = var.tags
 }
