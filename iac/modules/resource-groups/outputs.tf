@@ -1,6 +1,6 @@
 output "rg_name" {
   description = "name of the resource group"
-  value = azurerm_resource_group.rg
+  value = azurerm_resource_group.rg.name
 }
 
 output "rg_location" {
@@ -8,7 +8,8 @@ output "rg_location" {
   value = azurerm_resource_group.rg.location
 }
 
-output "rg-id" {
+output "rg_id" {
   description = "id of the resource group"
   value = azurerm_resource_group.rg.id
 }
+
