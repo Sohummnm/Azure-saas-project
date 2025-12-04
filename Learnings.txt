@@ -8,4 +8,67 @@ OIDC connection
 - BUT attaching IAM contributor role give this app registration the rights to create infra in the specified subscription,
 we can attach roles subscription based or resource group based. 
 4. Created a auth.yaml a temp workflow to check the connection which fetched the Azure Account ID successfully. 
-================================= 
+=================================
+REUSABLE TERRAFORM SETUP AND RESOURCE GROUP WORKFLOW CALLER
+===================================
+• 	Always check repo-relative paths; GitHub runners use Linux paths, not Windows.
+• 	Provider must have ; don’t mix GitHub secrets syntax into .
+• 	Loosen Terraform version constraints to match runner defaults.
+• 	For OIDC, rely on  environment variables, not Azure CLI auth.
+• 	Separate apply and destroy logic; never chain them blindly.
+• 	Validate filenames carefully ( vs ).
+• 	Keep workflows modular: caller passes inputs/secrets, reusable handles Terraform steps.
+==================================
+FLOW OF CREATING RESOURCE_GROUP WITH RG WORKFLOW AND REUSABLE TERRAFORM WORKFLOW.
+=================================
+
+[ GitHub Secrets ]
+   └── AZURE_CLIENT_ID
+   └── AZURE_TENANT_ID
+   └── AZURE_SUBSCRIPTION_ID
+        │
+        ▼
+[ Caller Workflow: resourcegroup.yaml ]
+   - Trigger: workflow_dispatch
+   - Fetches secrets from GitHub
+   - Passes inputs:
+       • module = "resource-groups"
+       • tfvars = ../../environments/prod/tfvars/resource_groups.tfvars
+       • backend = ../../environments/prod/backend/resource_group.backend.hcl
+       • tf_action = plan/apply/destroy
+   - Passes secrets → reusable workflow
+        │
+        ▼
+[ Reusable Workflow: reusableworkflow.yaml ]
+   - Receives inputs + secrets
+   - Steps:
+       1. Checkout code
+       2. Azure Login (OIDC via azure/login@v2)
+       3. Setup Terraform
+       4. Terraform Init (backend config)
+       5. Terraform Validate
+       6. Terraform Plan
+       7. Security Scan (tfsec)
+       8. Terraform Apply (conditional)
+       9. Terraform Destroy (conditional)
+   - Authentication:
+       • env:
+           ARM_CLIENT_ID
+           ARM_TENANT_ID
+           ARM_SUBSCRIPTION_ID
+           ARM_USE_OIDC=true
+        │
+        ▼
+[ Terraform Provider Block ]
+   provider "azurerm" {
+     features {}
+   }
+   - Reads ARM_* env vars
+   - Authenticates via OIDC
+        │
+        ▼
+[ Azure Cloud ]
+   - Resource Group created in subscription
+   - Managed by Terraform state in backend (Azure Storage)
+
+ 

@@ -67,7 +67,7 @@ jobs:
           - name: Security Scan with tfsec
             uses: aquasecurity/tfsec-action@v1.0.3
             with:
-              directory: iac/modules/${{ inputs.module }}
+              working_directory: iac/modules/${{ inputs.module }}
           - name: Terraform Apply
             if: github.ref == 'refs/heads/main'
             run: terraform apply -auto-approve -var-file=${{ inputs.tfvars }}
