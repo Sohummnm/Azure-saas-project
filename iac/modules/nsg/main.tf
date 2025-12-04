@@ -1,4 +1,4 @@
-resource "azurerm_netwwork_security_group" "nsg" {
+resource "azurerm_network_security_group" "nsg" {
     for_each = var.nsgs
     name = each.key
     location = data.terraform_remote_state.resource_group.outputs.location
@@ -13,7 +13,7 @@ resource "azurerm_subnet_network_security_group_association" "assoc" {
         db = { subnet_id = data.terraform_remote_state.vnet.outputs.subnet_ids["db"], nsg_name = "db"}
     }
     subnet_id = each.value.subnet_id
-    network_security_group_id = azurerm_netwwork_security_group.nsg[each.value.nsg_name].id
+    network_security_group_id = azurerm_network_security_group.nsg[each.value.nsg_name].id
 }
 
 resource "azurerm_network_security_rule" "aks_rules" {
@@ -28,7 +28,7 @@ resource "azurerm_network_security_rule" "aks_rules" {
     source_address_prefix = each.value.source
     destination_address_prefix = "*"
     resource_group_name = data.terraform_remote_state.resource_group.outputs.rg_name
-    network_security_group_name = azurerm_netwwork_security_group.nsg["aks"].name
+    network_security_group_name = azurerm_network_security_group.nsg["aks"].name
 
 }
 
@@ -43,7 +43,7 @@ resource "azurerm_network_security_rule" "appgw_rules" {
   destination_port_range      = each.value.port
   source_address_prefix       = each.value.source
   destination_address_prefix  = "*"
-  resource_group_name         = data.terraform_remote_state.rg.outputs.resource_group_name
+  resource_group_name         = data.terraform_remote_state.resource_group.outputs.rg_name
   network_security_group_name = azurerm_network_security_group.nsg["appgw"].name
 }
 
@@ -58,6 +58,6 @@ resource "azurerm_network_security_rule" "db_rules" {
   destination_port_range      = each.value.port
   source_address_prefix       = each.value.source
   destination_address_prefix  = "*"
-  resource_group_name         = data.terraform_remote_state.rg.outputs.resource_group_name
+  resource_group_name         = data.terraform_remote_state.resource_group.outputs.rg_name
   network_security_group_name = azurerm_network_security_group.nsg["db"].name
 }
