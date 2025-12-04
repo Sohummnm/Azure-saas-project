@@ -70,5 +70,15 @@ FLOW OF CREATING RESOURCE_GROUP WITH RG WORKFLOW AND REUSABLE TERRAFORM WORKFLOW
 [ Azure Cloud ]
    - Resource Group created in subscription
    - Managed by Terraform state in backend (Azure Storage)
+======================================================
+VNET 
+===================================================
+From the VNet module i learned:
+- CIDR math and alignment are non‑negotiable.
+- AKS needs large subnets, apps/databases can use smaller ones.
+- Remote state must be refreshed after output changes.
+- Reusable workflows must separate plan/apply.
+- Modular isolation + tagging = enterprise‑grade governance.
+
 
  
