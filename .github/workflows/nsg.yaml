@@ -20,8 +20,8 @@ jobs:
         with:
             tf_action: ${{ inputs.tf_action }}
             module: "nsg"
-            tfvars: ../..environments/prod/tfvars/nsg.tfvars
-            backend: ../..environments/prod/backend/nsg.backend.hcl
+            tfvars: ../../environments/prod/tfvars/nsg.tfvars
+            backend: ../../environments/prod/backend/nsg.backend.hcl
         secrets:
             AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID}}
             AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID}}
