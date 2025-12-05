@@ -48,4 +48,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "user_node_pool" {
   max_count = 3
   mode = "User"
   vnet_subnet_id = data.terraform_remote_state.network.outputs.subnet_ids["aks"]
+  os_type = "Linux"
+  node_public_ip_enabled = false
 }
