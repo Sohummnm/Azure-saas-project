@@ -16,7 +16,7 @@ resource "azurerm_application_gateway" "appgw-prod-aks" {
     }
 
     frontend_ip_configuration {
-        name = appgw-feip
+        name = "appgw-feip"
         public_ip_address_id = data.terraform_remote_state.pip.outputs.public_ip_id
     }
 
