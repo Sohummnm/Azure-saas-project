@@ -52,7 +52,7 @@ resource "azurerm_application_gateway" "appgw-prod-aks" {
   request_routing_rule {
     name = "rule-http-basic"
     rule_type = "Basic"
-    http_listener_name = "http_listener"
+    http_listener_name = "http-listener"
     backend_address_pool_name = "aks-backend-pool"
     backend_http_settings_name = "http-settings"
   }
