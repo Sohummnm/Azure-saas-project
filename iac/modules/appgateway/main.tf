@@ -62,22 +62,3 @@ resource "azurerm_application_gateway" "appgw-prod-aks" {
   tags = var.tags
 }
 
-resource "azurerm_user_assigned_identity" "agic_identity" {
-  name = var.agic_identity_name
-  resource_group_name = data.terraform_remote_state.resource_group.outputs.rg_name
-  location = data.terraform_remote_state.resource_group.outputs.rg_location
-  
-}
-
-resource "azurerm_role_assignment" "agic_appgw" {
-  scope = azurerm_application_gateway.appgw-prod-aks.id
-  principal_id = azurerm_user_assigned_identity.agic_identity.principal_id
-  role_definition_name = "Contributor"
-  
-}
-
-resource "azurerm_role_assignment" "agic_rg_reader" {
-  scope                = data.terraform_remote_state.resource_group.outputs.rg_id
-  principal_id         = azurerm_user_assigned_identity.agic_identity.principal_id
-  role_definition_name = "Reader"
-}

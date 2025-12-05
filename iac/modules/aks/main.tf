@@ -11,6 +11,8 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
   ingress_application_gateway {
     gateway_id = data.terraform_remote_state.appgw.outputs.appgw_id
+
+
   }
 
   default_node_pool {
@@ -36,8 +38,8 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
   
   identity {
-    type = "UserAssigned"
-    identity_ids = [data.terraform_remote_state.appgw.outputs.agic_identity]
+    type = "SystemAssigned"
+   
   }
   role_based_access_control_enabled = true
 
@@ -56,4 +58,24 @@ resource "azurerm_kubernetes_cluster_node_pool" "user_node_pool" {
     vnet_subnet_id = data.terraform_remote_state.network.outputs.subnet_ids["aks"]
     os_type = "Linux"
     node_public_ip_enabled = false
+}
+
+data "azurerm_user_assigned_identity" "agic_addon" {
+  name                = "ingressapplicationgateway-${azurerm_kubernetes_cluster.aks_cluster.name}"
+  resource_group_name = azurerm_kubernetes_cluster.aks_cluster.node_resource_group
+
+  depends_on = [
+    azurerm_kubernetes_cluster.aks_cluster
+  ]
+}
+resource "azurerm_role_assignment" "agic_addon_appgw_contrib" {
+  scope                = data.terraform_remote_state.appgw.outputs.appgw_id
+  principal_id         = data.azurerm_user_assigned_identity.agic_addon.principal_id
+  role_definition_name = "Contributor"
+}
+
+resource "azurerm_role_assignment" "agic_addon_rg_reader" {
+  scope                = data.terraform_remote_state.resource_group.outputs.rg_id
+  principal_id         = data.azurerm_user_assigned_identity.agic_addon.principal_id
+  role_definition_name = "Reader"
 }
