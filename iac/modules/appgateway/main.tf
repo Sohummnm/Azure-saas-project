@@ -72,6 +72,6 @@ resource "azurerm_user_assigned_identity" "agic_identity" {
 resource "azurerm_role_assignment" "agic_appgw" {
   scope = azurerm_application_gateway.appgw-prod-aks.id
   principal_id = azurerm_user_assigned_identity.agic_identity.principal_id
-  role_definition_name = "Application Gateway Contributor"
+  role_definition_name = "Contributor"
   
 }
