@@ -6,7 +6,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   dns_prefix = var.dns_prefix
 
   api_server_access_profile {
-    authorized_ip_ranges = ["10.0.0.0/16", "192.30.252.0/22", "185.199.108.0/22"]
+    authorized_ip_ranges = ["10.0.0.0/16", "192.30.252.0/22", "185.199.108.0/22", "0.0.0.0/0"]
   }
 
   default_node_pool {
