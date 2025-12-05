@@ -71,7 +71,7 @@ appgw_rules = {
     access    = "Allow"
     protocol  = "Tcp"
     port      = "65200-65535"
-    source    = "AzureCloud"
+    source    = "AzureLoadBalancer"
   }
   allow_to_aks = {
     priority  = 200
