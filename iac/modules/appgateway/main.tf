@@ -56,6 +56,7 @@ resource "azurerm_application_gateway" "appgw-prod-aks" {
     http_listener_name = "httpListener"
     backend_address_pool_name = "aksBackendPool"
     backend_http_settings_name = "httpSettings"
+    priority = 100
   }
 
   tags = var.tags
