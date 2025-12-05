@@ -35,7 +35,7 @@ resource "azurerm_application_gateway" "appgw-prod-aks" {
   }
 
   backend_http_settings {
-    name = "https-settings"
+    name = "http-settings"
     cookie_based_affinity = "Disabled"
     port = 80
     protocol = "Http"
