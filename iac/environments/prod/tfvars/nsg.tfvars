@@ -81,6 +81,14 @@ appgw_rules = {
     port      = "443"
     source    = "10.0.0.0/17"   # literal CIDR of AKS subnet
   }
+  allow_internet_ephemeral = {
+    priority  = 115
+    direction = "Inbound"
+    access    = "Allow"
+    protocol  = "Tcp"
+    port      = "65200-65535"
+    source    = "Internet"
+  }
 }
 
 # DB NSG rules
