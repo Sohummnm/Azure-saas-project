@@ -16,7 +16,3 @@ output "appgw_public_ip_address" {
   description = "IP address of App Gateway"
   value = data.terraform_remote_state.pip.outputs.public_ip_address
 }
-output "agic_identity" {
-  description = "Id of user assigned agic identity"
-  value = azurerm_user_assigned_identity.agic_identity.id
-}
