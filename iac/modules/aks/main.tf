@@ -5,6 +5,10 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     resource_group_name = data.terraform_remote_state.resource_group.outputs.rg_name
   dns_prefix = var.dns_prefix
 
+  api_server_access_profile {
+    authorized_ip_ranges = ["10.0.0.0/16", "192.30.252.0/22", "185.199.108.0/22"]
+  }
+
   default_node_pool {
     name = "system"
     node_count = 1
@@ -24,10 +28,6 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     log_analytics_workspace_id = data.terraform_remote_state.log_analytics.outputs.log_analytics_workspace_id
   }
   
-  api_server_access_profile {
-    authorized_ip_ranges = ["10.0.0.0/16", "192.30.252.0/22", "185.199.108.0/22"]
-    }
-
   identity {
     type = "SystemAssigned"
   }
