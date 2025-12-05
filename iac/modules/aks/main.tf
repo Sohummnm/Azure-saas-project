@@ -37,7 +37,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   
   identity {
     type = "UserAssigned"
-    identity_ids = data.terraform_remote_state.appgw.outputs.agic_identity
+    identity_ids = [data.terraform_remote_state.appgw.outputs.agic_identity]
   }
   role_based_access_control_enabled = true
 
