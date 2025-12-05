@@ -75,3 +75,9 @@ resource "azurerm_role_assignment" "agic_appgw" {
   role_definition_name = "Contributor"
   
 }
+
+resource "azurerm_role_assignment" "agic_rg_reader" {
+  scope                = data.terraform_remote_state.resource_group.outputs.rg_id
+  principal_id         = azurerm_user_assigned_identity.agic_identity.principal_id
+  role_definition_name = "Reader"
+}
