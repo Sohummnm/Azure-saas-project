@@ -13,7 +13,6 @@ on:
         inputs:
             tf_action:
                 description: "Terraform action to perform (plan/apply/destroy)"
-                default: 'plan'
                 required: true
                 type: string
 jobs:
@@ -21,8 +20,8 @@ jobs:
         uses: ./.github/workflows/reusableworkflow.yaml
         with:
             tf_action: ${{ inputs.tf_action }}
-            tfvars: ../../environments/prod/tfvars/acr.tfvars
-            backend: ../../environments/prod/tfvars/acr.tfvars
+            tfvars: "../../environments/prod/tfvars/acr.tfvars"
+            backend: "../../environments/prod/backend/acr.backend.hcl"
             module: "acr"
         secrets:
             AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}

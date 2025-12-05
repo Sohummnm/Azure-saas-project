@@ -14,7 +14,6 @@ on:
                 description: "terraform action to perform (plan/apply/destroy)"
                 required: true
                 type: string
-                default: "plan"
 jobs:
     aks:
         uses: ./.github/workflows/reusableworkflow.yaml

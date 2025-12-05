@@ -13,7 +13,6 @@ on:
             tf_action:
                 description: "terraform action to perform (plan, apply, destroy)"
                 required: true
-                default: "plan"
                 type: string
 jobs:
     vnet:
