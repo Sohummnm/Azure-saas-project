@@ -1,4 +1,4 @@
-acr_name = "azure-saas-project-acr-prod"
+acr_name = "AzureSaasProjectAcrProd"
 sku      = "Standard"
 
 tags = {
