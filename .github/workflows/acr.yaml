@@ -1,0 +1,33 @@
+#ACR workflow yaml
+
+name: ACR Module - Prod
+
+on:
+    workflow_dispatch:
+        inputs:
+            tf_action:
+                description: "Terraform action to perform (plan/apply/destroy)"
+                default: 'plan'
+                required: true
+    workflow_call:
+        inputs:
+            tf_action:
+                description: "Terraform action to perform (plan/apply/destroy)"
+                default: 'plan'
+                required: true
+                type: string
+jobs:
+    acr:
+        uses: ./.github/workflows/reusableworkflow.yaml
+        with:
+            tf_action: ${{ inputs.tf_action }}
+            tfvars: ../../environments/prod/tfvars/acr.tfvars
+            backend: ../../environments/prod/tfvars/acr.tfvars
+            module: "acr"
+        secrets:
+            AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+            AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+            AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        permissions:
+            contents: read
+            id-token: write
