@@ -40,14 +40,14 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
 resource "azurerm_kubernetes_cluster_node_pool" "user_node_pool" {
     name = "userpool"
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
-  vm_size = var.user_node_pool_vm_size
-  node_count = 1
-  auto_scaling_enabled = true
-  min_count = 1
-  max_count = 3
-  mode = "User"
-  vnet_subnet_id = data.terraform_remote_state.network.outputs.subnet_ids["aks"]
-  os_type = "Linux"
-  node_public_ip_enabled = false
+    kubernetes_cluster_id = azurerm_kubernetes_cluster.aks_cluster.id
+    vm_size = var.user_node_pool_vm_size
+    node_count = 1
+    auto_scaling_enabled = true
+    min_count = 1
+    max_count = 3
+    mode = "User"
+    vnet_subnet_id = data.terraform_remote_state.network.outputs.subnet_ids["aks"]
+    os_type = "Linux"
+    node_public_ip_enabled = false
 }
