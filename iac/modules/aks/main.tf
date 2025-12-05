@@ -1,7 +1,7 @@
 
 resource "azurerm_kubernetes_cluster" "aks_cluster" {
     name = var.cluster_name
-    location = data.terraform_remote_state.resource_group.outputs.location
+    location = data.terraform_remote_state.resource_group.outputs.rg_location
     resource_group_name = data.terraform_remote_state.resource_group.outputs.rg_name
   dns_prefix = var.dns_prefix
 
