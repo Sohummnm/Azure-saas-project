@@ -1,0 +1,32 @@
+#workflow for monitoring module
+
+name: Monitoring Module -Prod
+on:
+    workflow_dispatch:
+        inputs:
+            tf_action:
+                description: "Terraform action to perform (plan/apply/destroy)"
+                required: true
+                default: 'plan'
+    workflow_call:
+        inputs:
+            tf_action:
+                description: "Terraform action to perform (plan/apply/destroy)"
+                required: true
+                type: string
+                default: 'plan'
+jobs:
+    monitoring:
+        uses: ./.github/workflows/reusableworkflow.yaml
+        with:
+            tf_action: ${{ inputs.tf_action }}
+            module: "monitoring"
+            tfvars: ../../environments/prod/tfvars/monitoring.tfvars
+            backend: ../../environments/prod/backend/monitoring.backend.hcl
+        secrets:
+            AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID}}
+            AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID}}
+            AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID}}
+        permissions:
+            contents: read
+            id-token: write

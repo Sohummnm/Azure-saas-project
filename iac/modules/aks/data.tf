@@ -18,3 +18,12 @@ data "terraform_remote_state" "network" {
         key = "vnet.tfstate"
     }
 }
+data "terraform_remote_state" "log_analytics" {
+    backend = "azurerm"
+    config = {
+        resource_group_name = "azure-saas-project-rg"
+        storage_account_name = "azuresaasproject"
+        container_name = "prod"
+        key = "monitoring.tfstate"
+    }
+}

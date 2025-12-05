@@ -15,6 +15,19 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     vnet_subnet_id = data.terraform_remote_state.network.outputs.subnet_ids["aks"]
   }
 
+  network_profile {
+    network_plugin = "azure"
+    network_policy = "azure"
+  }
+
+  oms_agent {
+    log_analytics_workspace_id = data.terraform_remote_state.log_analytics.outputs.log_analytics_workspace_id
+  }
+  
+  api_server_access_profile {
+    authorized_ip_ranges = ["0.0.0.0/0"]
+    }
+
   identity {
     type = "SystemAssigned"
   }
