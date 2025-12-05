@@ -1,5 +1,5 @@
 cluster_name = "prod-aks"
-vm_size = "Standard_B2s"
+vm_size = "Standard_DS2_v2"
 dns_prefix = "prodaks"
 tags = {
     environment = "production"
