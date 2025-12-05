@@ -79,3 +79,13 @@ resource "azurerm_role_assignment" "agic_addon_rg_reader" {
   principal_id         = data.azurerm_user_assigned_identity.agic_addon.principal_id
   role_definition_name = "Reader"
 }
+
+resource "azurerm_role_assignment" "agic_addon_subnet_network_contrib" {
+  scope                = data.terraform_remote_state.network.outputs.subnet_ids["appgw"]
+  principal_id         = data.azurerm_user_assigned_identity.agic_addon.principal_id
+  role_definition_name = "Network Contributor"
+
+  depends_on = [
+    data.azurerm_user_assigned_identity.agic_addon
+  ]
+}
