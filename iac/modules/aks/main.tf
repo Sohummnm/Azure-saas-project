@@ -25,7 +25,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   }
   
   api_server_access_profile {
-    authorized_ip_ranges = ["0.0.0.0/0"]
+    authorized_ip_ranges = ["10.0.0.0/16", "192.30.252.0/22", "185.199.108.0/22"]
     }
 
   identity {
