@@ -20,10 +20,17 @@ variable "sku_capacity" {
   type        = number
 }
 
+variable "backend_ips" {
+}
+
 
 # Tags
 variable "tags" {
   description = "Tags to apply"
   type        = map(string)
   default     = {}
+}
+
+variable "agic_identity_name" {
+  description = "Mention AGIC UAMI name"
 }

@@ -9,6 +9,10 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     authorized_ip_ranges = ["10.0.0.0/16", "192.30.252.0/22", "185.199.108.0/22", "0.0.0.0/0"]
   }
 
+  ingress_application_gateway {
+    gateway_id = data.terraform_remote_state.appgw.outputs.appgw_id
+  }
+
   default_node_pool {
     name = "system"
     node_count = 1
@@ -29,6 +33,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   oms_agent {
     log_analytics_workspace_id = data.terraform_remote_state.log_analytics.outputs.log_analytics_workspace_id
   }
+
   
   identity {
     type = "SystemAssigned"

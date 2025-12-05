@@ -32,6 +32,7 @@ resource "azurerm_application_gateway" "appgw-prod-aks" {
 
   backend_address_pool {
     name = "aks-backend-pool"
+    ip_addresses = var.backend_ips
   }
 
   backend_http_settings {
@@ -58,4 +59,22 @@ resource "azurerm_application_gateway" "appgw-prod-aks" {
   }
 
   tags = var.tags
+}
+
+resource "azurerm_user_assigned_identity" "agic_identity" {
+  name = var.agic_identity_name
+  resource_group_name = data.terraform_remote_state.resource_group.outputs.rg_name
+  location = data.terraform_remote_state.resource_group.outputs.rg_location
+  
+}
+
+data "azurerm_role_definition" "appgw_contributor" {
+  name = "Application Gateway Contributor"
+}
+
+resource "azurerm_role_assignment" "agic_appgw" {
+  scope = azurerm_application_gateway.appgw-prod-aks.id
+  role_definition_id = data.azurerm_role_definition.appgw_contributor.id
+  principal_id = azurerm_user_assigned_identity.agic_identity.principal_id
+  
 }

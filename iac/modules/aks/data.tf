@@ -27,3 +27,12 @@ data "terraform_remote_state" "log_analytics" {
         key = "monitoring.tfstate"
     }
 }
+data "terraform_remote_state" "appgw" {
+    backend = "azurerm"
+    config = {
+        resource_group_name = "azure-saas-project-rg"
+        storage_account_name = "azuresaasproject"
+        container_name = "prod"
+        key = "appgateway.tfstate"
+    }
+}
